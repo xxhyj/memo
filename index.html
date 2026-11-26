@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>메모정리장</title>
+  <!-- 깔끔한 글꼴(Pretendard). 인터넷이 안 되면 기본 글꼴로 보입니다 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>🗂️ 메모정리장</h1>
+    <p class="tagline">오늘도 차근차근 하나씩 ✨</p>
+  </header>
+
+  <!-- 요약 카드 -->
+  <div class="stats">
+    <div class="stat yellow"><i>📌</i><div><b id="stat-today">0</b><span>오늘 마감</span></div></div>
+    <div class="stat peach"><i>⚠️</i><div><b id="stat-over">0</b><span>기한 지남</span></div></div>
+    <div class="stat mint"><i>📋</i><div><b id="stat-open">0</b><span>남은 할 일</span></div></div>
+  </div>
+
+  <main class="layout">
+    <!-- 할 일 -->
+    <section id="panel-todo" class="panel active">
+      <h2>🔔 오늘 일정</h2>
+      <ul id="today-events" class="list"></ul>
+
+      <h2>☑️ 할 일</h2>
+      <form id="todo-form" class="add-form">
+        <input id="todo-text" type="text" placeholder="할 일을 입력하세요" required maxlength="100">
+        <button type="submit" class="primary">추가</button>
+        <div class="due-row">
+          <span>마감</span>
+          <input id="todo-due" type="date" title="마감일(선택)">
+          <button type="button" class="chip" data-quick="0">오늘</button>
+          <button type="button" class="chip" data-quick="1">내일</button>
+          <button type="button" class="chip" data-quick="">없음</button>
+        </div>
+      </form>
+      <div class="chips" id="todo-filters">
+        <button data-filter="all" class="chip active">전체</button>
+        <button data-filter="today" class="chip">오늘</button>
+        <button data-filter="open" class="chip">남은 것</button>
+        <button data-filter="done" class="chip">완료</button>
+      </div>
+      <ul id="todo-list" class="list"></ul>
+    </section>
+
+    <!-- 캘린더 (큰 화면에서는 맨 왼쪽) -->
+    <section id="panel-cal" class="panel">
+      <h2>🗓️ 캘린더</h2>
+      <div class="cal-head">
+        <button id="cal-prev" aria-label="이전 달">◀</button>
+        <strong id="cal-title"></strong>
+        <button id="cal-next" aria-label="다음 달">▶</button>
+        <button id="cal-today">오늘</button>
+      </div>
+      <div id="cal-grid" class="cal-grid"></div>
+
+      <h3 id="cal-selected"></h3>
+      <ul id="cal-items" class="list"></ul>
+      <form id="event-form" class="add-form">
+        <input id="event-title" type="text" placeholder="제목 (일정 또는 할 일)" required maxlength="100">
+        <input id="event-time" type="time" title="시간(일정만, 선택)">
+        <button type="submit" class="primary">일정 추가</button>
+        <button type="button" id="event-as-todo">할 일로 추가</button>
+      </form>
+    </section>
+
+    <!-- 메모 -->
+    <section id="panel-memo" class="panel">
+      <h2>🗒️ 메모</h2>
+      <div class="add-form">
+        <input id="memo-search" type="search" placeholder="🔍 메모 검색">
+        <button id="memo-new" class="primary">+ 새 메모</button>
+      </div>
+      <ul id="memo-list" class="list memo-cards"></ul>
+    </section>
+  </main>
+
+  <!-- 모바일 하단 메뉴 -->
+  <nav class="bottom-nav">
+    <button data-panel="panel-todo" class="active">☑️ 할 일</button>
+    <button data-panel="panel-cal">🗓️ 캘린더</button>
+    <button data-panel="panel-memo">🗒️ 메모</button>
+  </nav>
+
+  <!-- 메모 편집 팝업 -->
+  <dialog id="memo-dialog">
+    <form method="dialog" id="memo-form">
+      <input id="memo-title" type="text" placeholder="제목" maxlength="100">
+      <textarea id="memo-content" rows="12" placeholder="내용을 적어 보세요"></textarea>
+      <div class="dlg-foot">
+        <small id="memo-count"></small>
+        <span class="spacer"></span>
+        <button type="button" id="memo-delete" class="danger">삭제</button>
+        <button type="button" id="memo-close">닫기</button>
+        <button type="button" id="memo-save" class="primary">저장</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="storage.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

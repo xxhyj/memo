@@ -1,0 +1,9 @@
+{
+  "name": "memo-jeongrijang",
+  "version": "1.0.0",
+  "private": true,
+  "description": "메모정리장 - 메모·할 일·캘린더 개인용 웹앱",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
