@@ -1,0 +1,7 @@
+# Vercel 배포 때 올리지 않을 파일 (내 컴퓨터에서 열어 볼 때만 쓰는 것들)
+server.js
+package.json
+시작.bat
+PRD.md
+README.md
+.claude
